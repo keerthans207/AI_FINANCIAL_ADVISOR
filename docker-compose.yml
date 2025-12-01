@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: .
+    container_name: afadv_backend
+    env_file: .env
+    ports:
+      - "8000:8000"
+      - "8001:8001" # prometheus metrics
+    depends_on:
+      - redis
+    volumes:
+      - ./data:/app/data
+      - ./sample_data:/app/sample_data
+
+  celery:
+    build: .
+    container_name: afadv_celery
+    command: ["celery", "-A", "app.celery_worker.celery", "worker", "--loglevel=info", "-Q", "monitor_queue"]
+    env_file: .env
+    depends_on:
+      - redis
+      - backend
+    volumes:
+      - ./data:/app/data
+      - ./sample_data:/app/sample_data
+
+  flower:
+    image: mher/flower:1.0.0
+    ports:
+      - "5555:5555"
+    environment:
+      - BROKER_URL=${CELERY_BROKER_URL}
