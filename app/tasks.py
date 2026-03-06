@@ -29,19 +29,30 @@ def monitor_user_finances(self, user_id: int, iterations: int = 10, pause_second
             txs = db.query(Transaction).filter(Transaction.user_id == user_id).all()
             # convert ORM rows to dicts
             rows = [{"date": t.date, "amount": t.amount, "description": t.description, "category": t.category} for t in txs]
-            # run analysis and advisor synchronously on event loop
-            loop = asyncio.get_event_loop()
-            analysis = loop.run_until_complete(analysis_agent(rows))
-            advice = loop.run_until_complete(advisor_agent(analysis, {"risk_profile": "medium"}))
+            # run analysis and advisor using asyncio.run() instead of deprecated get_event_loop()
+            try:
+                analysis = asyncio.run(analysis_agent(rows))
+                advice = asyncio.run(advisor_agent(analysis, {"risk_profile": "medium"}, rows))
+            except RuntimeError:
+                # Fallback for environments where event loop already exists
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    analysis = loop.run_until_complete(analysis_agent(rows))
+                    advice = loop.run_until_complete(advisor_agent(analysis, {"risk_profile": "medium"}, rows))
+                finally:
+                    loop.close()
+            
             # save advice to DB
             new = Advice(user_id=user_id, advice_blob=advice)
             db.add(new)
             db.commit()
             log.info("monitor_iteration_finished", user_id=user_id, iteration=i+1)
             # simple pause/resume: check if task requested to revoke
-            time.sleep(pause_seconds)
+            if i < iterations - 1:  # Don't sleep on last iteration
+                time.sleep(pause_seconds)
     except Exception as e:
-        log.error("monitor_error", error=str(e))
+        log.error("monitor_error", error=str(e), user_id=user_id)
         raise
     finally:
         db.close()

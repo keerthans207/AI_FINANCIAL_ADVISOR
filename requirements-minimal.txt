@@ -1,0 +1,37 @@
+# Minimal requirements for 4GB RAM laptop (no Docker, no Celery)
+# Core dependencies only
+
+# Web framework
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+
+# Database
+sqlalchemy==2.0.23
+
+# Data validation
+pydantic==1.10.11
+
+# HTTP client
+httpx==0.27.0
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Logging
+structlog==24.1.0
+
+# RAG system (lightweight)
+numpy==1.26.4
+
+# Optional: Uncomment if you want monitoring (adds ~50MB RAM)
+# prometheus-client==0.16.0
+
+# Optional: Uncomment if you want distributed tracing (adds ~30MB RAM)
+# opentelemetry-api==1.18.0
+# opentelemetry-sdk==1.18.0
+# opentelemetry-instrumentation==0.36b0
+# opentelemetry-exporter-otlp==1.18.0
+
+# Optional: Uncomment if you want background tasks (requires Redis)
+# redis==4.5.5
+# celery==5.3.1

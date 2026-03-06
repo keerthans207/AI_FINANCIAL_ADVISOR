@@ -1,0 +1,24 @@
+# Production RAG System Requirements for 4GB RAM
+# Core dependencies
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+sqlalchemy==2.0.23
+pydantic==1.10.11
+python-dotenv==1.0.0
+structlog==24.1.0
+
+# LLM and RAG Stack
+# Use pre-built wheel for llama-cpp-python (no compilation needed)
+# For Windows: Install from pre-built wheel
+# llama-cpp-python==0.2.27
+
+# Embeddings and Vector Store
+sentence-transformers==2.2.2  # all-MiniLM-L6-v2
+faiss-cpu==1.7.4  # Vector store
+torch==2.1.0  # CPU only
+transformers==4.35.0  # Model utilities
+
+# Utilities
+numpy==1.26.4
+httpx==0.27.0
+

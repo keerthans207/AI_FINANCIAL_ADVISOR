@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+venv/
+.env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models / data
+*.bin
+*.pt
+*.onnx
+*.pkl
+chroma_db/
+vector_store/
+
+# Logs
+*.log

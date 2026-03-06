@@ -1,0 +1,83 @@
+================================================================================
+  AI FINANCIAL ADVISOR - LOCAL LLM RAG SYSTEM
+  READY TO USE!
+================================================================================
+
+WHAT'S INSTALLED:
+  ✓ llama-cpp-python (v0.3.2)
+  ✓ Phi-2 Model (1657 MB) in models/phi-2.Q4_K_M.gguf
+  ✓ sentence-transformers (all-MiniLM-L6-v2)
+  ✓ FAISS vector store
+  ✓ All dependencies
+
+SYSTEM SPECS:
+  - RAM Usage: ~1.5GB
+  - Model: Phi-2 (2.7B) Q4_K_M GGUF
+  - Mode: CPU-only, no GPU
+  - Response Time: 3-6 seconds
+
+================================================================================
+  QUICK START (3 COMMANDS)
+================================================================================
+
+1. START SERVER:
+   
+   START_LLM_SERVER.bat
+   
+   (Wait 30-60 seconds for model loading)
+
+2. CHECK STATUS (new terminal):
+   
+   curl http://localhost:8010/rag/status
+
+3. TEST WITH SAMPLE DATA:
+   
+   curl -X POST "http://localhost:8010/upload_csv?user_id=1" -F "file=@Sample data/enhanced_transactions.csv"
+
+================================================================================
+  WHAT YOU'LL GET
+================================================================================
+
+LLM-generated financial advice with:
+  - Financial health summary
+  - Risk assessment
+  - Budget recommendations (50-30-20 rule)
+  - Investment suggestions (risk-adjusted)
+  - Emergency fund strategy
+  - Actionable next steps
+
+All based on YOUR actual transaction data!
+
+================================================================================
+  DOCUMENTATION
+================================================================================
+
+  SETUP_COMPLETE.md      - Complete setup guide
+  LLM_RAG_GUIDE.md       - Technical documentation
+  README.md              - Main documentation
+  INSTALL_LLAMA_CPP.md   - Installation help
+
+================================================================================
+  TROUBLESHOOTING
+================================================================================
+
+Server won't start?
+  - Check port 8010 is available
+  - Ensure model file exists in models/
+
+Slow response?
+  - Normal for first request (30-60s)
+  - Subsequent requests: 3-6 seconds
+  - Close other apps to free RAM
+
+Out of memory?
+  - Close unnecessary applications
+  - You need 2GB+ free RAM
+
+================================================================================
+
+Ready to start? Run:  START_LLM_SERVER.bat
+
+Questions? Check SETUP_COMPLETE.md
+
+================================================================================
